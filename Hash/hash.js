@@ -45,6 +45,29 @@ get(key){
 has(key){
     return this.get(key) !== null;
 }
+remove(key){
+    const index = this.hash(key);
+    const bucket = this.buckets[index];
+
+    for(let i = 0; i < bucket.length; i++){
+        if (bucket[i][0]=== key){
+            bucket.splice(i,1);
+            this.size--;
+            return true;
+
+        }
+    }
+    return false;
+}
+
+length(){
+    return this.size;
+}
+
+clear(){
+    this.buckets = new Array(this.capacity).fill(null).map(()=> []);
+    this.size = 0;
+}
 
 
 
@@ -65,5 +88,6 @@ test.set('ice cream', 'white')
 test.set('jacket', 'blue')
 test.set('kite', 'pink')
 test.set('lion', 'golden')
+test.remove('apple')
 
 
