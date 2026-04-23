@@ -69,25 +69,120 @@ clear(){
     this.size = 0;
 }
 
+keys(){
+    const keys = [];
+    for (let bucket of this.buckets){
+        for (let pair of bucket) keys.push(pair[0]);
+    }
+    return keys;
+}
+
+values(){
+    const values =[];
+    for(let bucket of this.buckets){
+        for(let pair of bucket) values.push(pair[1]);
+    }
+    return values;
+}
+
+entries(){
+    const entries = [];
+    for(let bucket of this.buckets){
+        for(let pair of bucket) entries.push([pair[0], pair[1]]);
+    }
+    return entries;
+}
+
+_resize(){
+    const oldBuckets = this.buckets;
+    this.capacity *= 2;
+    this.buckets = new Array(this.capacity).fill(null).map(()=>[]);
+    this.size = 0;
+
+    for(let bucket of oldBuckets){
+        for(let [key, value] of bucket){
+            this.set(key, value);
+        }
+    }
+}
+
 
 
 
 }
 
-const test = new HashMap() 
 
-test.set('apple', 'red')
-test.set('banana', 'yellow')
-test.set('carrot', 'orange')
-test.set('dog', 'brown')
-test.set('elephant', 'gray')
-test.set('frog', 'green')
-test.set('grape', 'purple')
-test.set('hat', 'black')
-test.set('ice cream', 'white')
-test.set('jacket', 'blue')
-test.set('kite', 'pink')
-test.set('lion', 'golden')
-test.remove('apple')
+const test = new HashMap();
 
+console.log("=== SET & GET ===");
+test.set("apple", "red");
+test.set("banana", "yellow");
+test.set("carrot", "orange");
+
+console.log(test.get("apple"));     
+console.log(test.get("banana"));    
+console.log(test.get("carrot"));   
+console.log(test.get("missing"));  
+
+
+console.log("\n=== HAS ===");
+console.log(test.has("apple"));    
+console.log(test.has("banana"));   
+console.log(test.has("missing"));  
+
+
+
+console.log("\n=== UPDATE EXISTING KEY ===");
+test.set("apple", "green");
+console.log(test.get("apple"));    
+
+
+
+console.log("\n=== REMOVE ===");
+console.log(test.remove("banana")); 
+console.log(test.has("banana"));    
+console.log(test.remove("banana")); 
+
+
+
+console.log("\n=== LENGTH ===");
+console.log(test.length());   
+
+console.log("\n=== KEYS ===");
+console.log(test.keys()); 
+
+
+
+console.log("\n=== VALUES ===");
+console.log(test.values());      
+
+
+console.log("\n=== ENTRIES ===");
+console.log(test.entries());       
+
+
+console.log("\n=== CLEAR ===");
+test.clear();
+console.log(test.length());         
+console.log(test.keys());          
+console.log(test.values());        
+
+
+console.log("\n=== RESIZE TEST ===");
+const resizeTest = new HashMap();
+
+for (let i = 1; i <= 20; i++) {
+  resizeTest.set("key" + i, "value" + i);
+}
+
+console.log("Capacity after inserts:", resizeTest.capacity);
+
+
+console.log("Length:", resizeTest.length());
+
+
+console.log("Check a few values:");
+console.log(resizeTest.get("key1")); 
+console.log(resizeTest.get("key10")); 
+console.log(resizeTest.get("key20"));  
 
