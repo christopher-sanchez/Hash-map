@@ -1,8 +1,12 @@
-function HashMap(){
-
+class HashMap {
+constructor(initalCapacity=16,loadFactor = 0.75 ){
+    this.capacity = initalCapacity;
+    this.loadFactor = loadFactor;
+    this.buckets = new Array(this.capacity).fill(null).map(()=>[]);
+    this.size = 0;
+    
 }
-
-function hash(key) {
+ hash(key) {
   let hashCode = 0;
 
   const primeNumber = 31;
@@ -12,3 +16,7 @@ function hash(key) {
 
   return hashCode;
 } 
+
+
+}
+
